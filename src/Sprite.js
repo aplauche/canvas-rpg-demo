@@ -1,7 +1,8 @@
+import { GameObject } from "./GameObject";
 import { Vector2 } from "./Vector2";
 
 
-export class Sprite {
+export class Sprite extends GameObject {
 
   constructor({
     resource,
@@ -13,13 +14,14 @@ export class Sprite {
     position, // where on canvas to draw image
     animations
   }){
+    super({});
     this.resource = resource;
     this.frameSize = frameSize ?? new Vector2(16,16);
     this.hFrames = hFrames ?? 1;
     this.vFrames = vFrames ?? 1;
     this.frame = frame ?? 0;
     this.scale = scale ?? 1;
-    this.position = position;
+    this.position = position ?? new Vector2(0,0);
     this.frameMap = new Map();
     this.animations = animations ?? null
 
