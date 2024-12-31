@@ -1,7 +1,8 @@
 import { GameLoop } from './GameLoop';
-import { gridCells } from './helpers/grid';
+import { gridCells, isSpaceFree } from './helpers/grid';
 import { moveTowards } from './helpers/moveTowards';
 import { DOWN, Input, LEFT, RIGHT, UP } from './Input';
+import { walls } from './levels/level1';
 import { resources } from './Resources';
 import { Sprite } from './Sprite';
 import './style.css'
@@ -91,8 +92,12 @@ const tryMove = () => {
     hero.frame = 3;
   }
 
-  heroDestination.x = nextX
-  heroDestination.y = nextY
+  if(isSpaceFree(walls, nextX, nextY)){
+    heroDestination.x = nextX
+    heroDestination.y = nextY
+  }
+
+
 
 }
 
