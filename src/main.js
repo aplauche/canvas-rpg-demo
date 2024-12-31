@@ -1,4 +1,6 @@
 import { GameLoop } from './GameLoop';
+import { gridCells } from './helpers/grid';
+import { moveTowards } from './helpers/moveTowards';
 import { DOWN, Input, LEFT, RIGHT, UP } from './Input';
 import { resources } from './Resources';
 import { Sprite } from './Sprite';
@@ -25,13 +27,18 @@ const hero = new Sprite({
   hFrames: 3,
   vFrames: 8,
   frame: 1,
+  position: new Vector2(gridCells(6), gridCells(5))
  })
+
+
+const heroDestination = hero.position.duplicate()
+
+
 const shadow = new Sprite({
   resource: resources.images.shadow,
   frameSize: new Vector2(32,32),
  })
 
-const heroPos = new Vector2(16 * 6, 16 * 5);
 
 const input = new Input()
 
@@ -41,30 +48,52 @@ const draw = () => {
 
   // Center the Hero in the cell
   const heroOffset = new Vector2(-8, -21);
-  const heroPosX = heroPos.x+heroOffset.x;
-  const heroPosY = heroPos.y+1+heroOffset.y;
+  const heroPosX = hero.position.x+heroOffset.x;
+  const heroPosY = hero.position.y+1+heroOffset.y;
 
   hero.drawImage(ctx,heroPosX,heroPosY)
   shadow.drawImage(ctx,heroPosX,heroPosY)
 }
 
 const update = () => {
+
+  const distance = moveTowards(hero, heroDestination, 1)
+  const hasArrived = distance <= 0; // tune this value if you want char to continue after release
+
+  // ready to listen for move input again
+  if(hasArrived){
+    tryMove()
+  }
+
+}
+
+const tryMove = () => {
+
+  if(!input.direction) return;
+
+  let nextX = heroDestination.x
+  let nextY = heroDestination.y
+
   if (input.direction === DOWN) {
-    heroPos.y += 1;
+    nextY += gridCells(1)
     hero.frame = 0;
   }
   if (input.direction === UP) {
-    heroPos.y -= 1;
+    nextY -= gridCells(1)
     hero.frame = 6;
   }
   if (input.direction === LEFT) {
-    heroPos.x -= 1;
+    nextX -= gridCells(1)
     hero.frame = 9;
   }
   if (input.direction === RIGHT) {
-    heroPos.x += 1;
+    nextX += gridCells(1)
     hero.frame = 3;
   }
+
+  heroDestination.x = nextX
+  heroDestination.y = nextY
+
 }
 
 const gameloop = new GameLoop(update, draw)
