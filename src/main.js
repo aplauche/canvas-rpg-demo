@@ -1,13 +1,8 @@
-import { Animations } from './Animations';
-import { FrameIndexPattern } from './FrameIndexPattern';
 import { GameLoop } from './GameLoop';
 import { GameObject } from './GameObject';
-import { gridCells, isSpaceFree } from './helpers/grid';
-import { moveTowards } from './helpers/moveTowards';
-import { DOWN, Input, LEFT, RIGHT, UP } from './Input';
-import { walls } from './levels/level1';
+import { gridCells } from './helpers/grid';
+import { Input} from './Input';
 import { Hero } from './objects/Hero/Hero';
-import { STAND_DOWN, STAND_LEFT, STAND_RIGHT, STAND_UP, WALK_DOWN, WALK_LEFT, WALK_RIGHT, WALK_UP } from './objects/Hero/heroAnimations';
 import { resources } from './Resources';
 import { Sprite } from './Sprite';
 import './style.css'
