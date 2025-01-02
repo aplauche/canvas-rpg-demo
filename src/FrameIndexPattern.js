@@ -1,4 +1,6 @@
 export class FrameIndexPattern {
+  // this class receives an object with frames / duration and acts as an animation "track" 
+  // this can be selected and played through by the Animation class player
   constructor(animationConfig){
     this.currentTime = 0
     this.animationConfig = animationConfig

@@ -3,6 +3,7 @@ export const DOWN = "DOWN"
 export const LEFT = "LEFT"
 export const RIGHT = "RIGHT"
 
+// This custom implementaion allows a multikey input where the last pressed key is the one that counts
 export class Input {
 
   constructor(){

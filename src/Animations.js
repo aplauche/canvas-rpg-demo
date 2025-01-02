@@ -1,4 +1,6 @@
 export class Animations {
+  // Receives an object with keys as animation names and values as FrameIndexPattern instances or "tracks"
+  // This class is used as a switcher to select and play different animation tracks passing the delta time
   constructor(patterns){
     this.patterns = patterns
     this.activeKey = Object.keys(this.patterns)[0]

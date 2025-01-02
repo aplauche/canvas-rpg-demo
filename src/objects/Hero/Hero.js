@@ -101,6 +101,5 @@ export class Hero extends GameObject {
     if(hasArrived){
       this.tryMove(root)
     }
-  
   }
 }
