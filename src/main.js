@@ -1,3 +1,4 @@
+import { events } from './Events';
 import { GameLoop } from './GameLoop';
 import { GameObject } from './GameObject';
 import { gridCells } from './helpers/grid';
@@ -36,6 +37,11 @@ mainScene.addChild(groundSprite)
 mainScene.addChild(hero)
 
 mainScene.input = new Input()
+
+
+events.on("HERO_POSITION_CHANGED", mainScene, (data) => {
+  console.log(data)
+})
 
 const draw = () => {
   mainScene.draw(ctx,0,0)

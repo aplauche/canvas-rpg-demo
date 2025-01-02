@@ -1,4 +1,5 @@
 import { Animations } from "../../Animations"
+import { events } from "../../Events"
 import { FrameIndexPattern } from "../../FrameIndexPattern"
 import { GameObject } from "../../GameObject"
 import { gridCells, isSpaceFree } from "../../helpers/grid"
@@ -48,6 +49,7 @@ export class Hero extends GameObject {
 
     this.facingDirection = DOWN
     this.destination = this.position.duplicate()
+    this.previousPosition = new Vector2(0,0)
   }
 
   tryMove(root) {
@@ -93,6 +95,14 @@ export class Hero extends GameObject {
   
   }
 
+  emitPosition(){
+    if(this.position.x === this.previousPosition.x && this.position.y === this.previousPosition.y){
+      return
+    }
+    events.emit("HERO_POSITION_CHANGED", this.position)
+    this.previousPosition = this.position.duplicate()
+  }
+
   step(delta, root) {
     const distance = moveTowards(this, this.destination, 1)
     const hasArrived = distance <= 0; // tune this value if you want char to continue after release
@@ -101,5 +111,7 @@ export class Hero extends GameObject {
     if(hasArrived){
       this.tryMove(root)
     }
+
+    this.emitPosition()
   }
 }
