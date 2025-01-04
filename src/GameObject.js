@@ -1,3 +1,4 @@
+import { events } from "./Events";
 import { Vector2 } from "./Vector2";
 
 export class GameObject {
@@ -6,6 +7,7 @@ export class GameObject {
   }){
     this.position = position ?? new Vector2(0,0)
     this.children = []
+    this.parent = null
   }
 
   // First entry point of the loop
@@ -42,12 +44,21 @@ export class GameObject {
     //...
   }
 
+  // each child removes itself from the parent, which also unsubscribes all events for that child
+  destroy() {
+    this.children.forEach((child) => child.destroy());
+    this.parent.removeChild(this);
+  }
+
   /* Other Game Objects are nestable inside this one */
   addChild(gameObject) {
+    gameObject.parent = this;
     this.children.push(gameObject);
   }
 
   removeChild(gameObject) {
+    console.log('removing child', gameObject)
+    events.unsubscribe(gameObject); // remove all event listeners from the removed child
     this.children = this.children.filter(g => {
       return gameObject !== g;
     })
