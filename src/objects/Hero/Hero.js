@@ -9,7 +9,7 @@ import { walls } from "../../levels/level1"
 import { resources } from "../../Resources"
 import { Sprite } from "../../Sprite"
 import { Vector2 } from "../../Vector2"
-import { STAND_DOWN, STAND_LEFT, STAND_RIGHT, STAND_UP, WALK_DOWN, WALK_LEFT, WALK_RIGHT, WALK_UP } from "./heroAnimations"
+import { PICK_UP_DOWN, STAND_DOWN, STAND_LEFT, STAND_RIGHT, STAND_UP, WALK_DOWN, WALK_LEFT, WALK_RIGHT, WALK_UP } from "./heroAnimations"
 
 export class Hero extends GameObject {
   constructor(x,y){
@@ -42,6 +42,7 @@ export class Hero extends GameObject {
         standUp: new FrameIndexPattern(STAND_UP),
         standLeft: new FrameIndexPattern(STAND_LEFT),
         standRight: new FrameIndexPattern(STAND_RIGHT),
+        pickUp: new FrameIndexPattern(PICK_UP_DOWN),
       })
      })
 
@@ -50,6 +51,13 @@ export class Hero extends GameObject {
     this.facingDirection = DOWN
     this.destination = this.position.duplicate()
     this.previousPosition = new Vector2(0,0)
+
+    this.pickupTimer = 0
+    this.pickupShell = null
+
+    events.on("ITEM_PICKUP", this, (data) => {
+      this.handleItemPickup(data)
+    })
   }
 
   tryMove(root) {
@@ -103,7 +111,36 @@ export class Hero extends GameObject {
     this.previousPosition = this.position.duplicate()
   }
 
+  handleItemPickup({image, position}){
+    // stop any movement to pause player at position of item
+    this.destination = position.duplicate()
+    // trigger the times to display the pickup animation
+    this.pickupTimer = 1000
+
+    this.pickupShell = new Sprite({
+      resource: image,
+      position: new Vector2(0,-16) // bump up sprite a bit above head
+    })
+
+    this.addChild(this.pickupShell) // render it
+
+  }
+
   step(delta, root) {
+
+    // handle item pickups
+    //  for more complex instances use a state machine
+    // this.state = "ITEM_PICKUP" or this.state = "IDLE" etc
+    if(this.pickupTimer > 0){
+      this.pickupTimer -= delta
+      this.body.animations.play("pickUp")
+
+      if(this.pickupTimer <= 0){
+        this.pickupShell.destroy()
+      }
+      return
+    }
+
     const distance = moveTowards(this, this.destination, 1)
     const hasArrived = distance <= 0; // tune this value if you want char to continue after release
   

@@ -44,3 +44,14 @@ export const WALK_DOWN = makeWalkingFrames(0);
 export const WALK_RIGHT = makeWalkingFrames(3);
 export const WALK_UP = makeWalkingFrames(6);
 export const WALK_LEFT = makeWalkingFrames(9);
+
+// single frame pick up state
+export const PICK_UP_DOWN = {
+  duration: 100,
+  frames: [
+    {
+      time: 0,
+      frame: 12
+    }
+  ]
+}

@@ -30,6 +30,13 @@ export class Rod extends GameObject {
 
   onCollideWithHero(){
     this.destroy() // calls the destroy method on the GameObject class removing everything
+
+    // broadcast an event to the game loop
+
+    events.emit("ITEM_PICKUP", {
+      image: resources.images.rod,
+      position: this.position
+    })
   }
   
 }
