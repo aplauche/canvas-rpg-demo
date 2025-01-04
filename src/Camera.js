@@ -6,9 +6,7 @@ import { Vector2 } from "./Vector2";
 export class Camera extends GameObject {
 
   constructor(){
-    super({
-      position: new Vector2(0,0)
-    });
+    super();
 
     events.on("HERO_POSITION_CHANGED", this, (heroPosition) => {
 
@@ -30,9 +28,5 @@ export class Camera extends GameObject {
 
   }
 
-
-  step(){
-    // console.log('camera step')
-  }
 
 }

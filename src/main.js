@@ -5,6 +5,7 @@ import { GameObject } from './GameObject';
 import { gridCells } from './helpers/grid';
 import { Input} from './Input';
 import { Hero } from './objects/Hero/Hero';
+import { Inventory } from './objects/Inventory/Inventory';
 import { Rod } from './objects/Rod/Rod';
 import { resources } from './Resources';
 import { Sprite } from './Sprite';
@@ -45,6 +46,7 @@ mainScene.addChild(camera)
 const rod = new Rod(gridCells(7), gridCells(6))
 mainScene.addChild(rod)
 
+const inventory = new Inventory()
 
 mainScene.input = new Input()
 
@@ -69,6 +71,9 @@ const draw = () => {
 
   // restore the saved state
   ctx.restore()
+
+  // After translations, draw the UI elements
+  inventory.draw(ctx,0,0)
 
 
 }
