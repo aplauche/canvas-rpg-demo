@@ -13,6 +13,7 @@ export class Inventory extends GameObject {
     this.items = []
 
     events.on("ITEM_PICKUP", this, (data) => {
+      // TODO: use real unique identifiers by adding prop to GameObject
       this.items.push({
         id: this.items.length,
         image: data.image,

@@ -13,7 +13,10 @@ export class Rod extends GameObject {
       position: new Vector2(0,-5), // bump up sprite a bit
     })
 
+    this.addChild(this.sprite)
+  }
 
+  ready(){
     events.on("HERO_POSITION_CHANGED", this, (heroPosition) => {
 
       // round the hero position to the nearest grid cell
@@ -24,8 +27,6 @@ export class Rod extends GameObject {
         this.onCollideWithHero()
       }
     })
-
-    this.addChild(this.sprite)
   }
 
   onCollideWithHero(){

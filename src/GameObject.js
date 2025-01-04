@@ -8,6 +8,7 @@ export class GameObject {
     this.position = position ?? new Vector2(0,0)
     this.children = []
     this.parent = null
+    this.isReady = false
   }
 
   // First entry point of the loop
@@ -17,6 +18,11 @@ export class GameObject {
     // Call updates on all children first
     this.children.forEach((child) => child.stepEntry(delta, root));
 
+    if (!this.isReady) {
+      this.isReady = true; // only set to ready once all children have been stepped
+      this.ready();
+    }
+
     // Call any implemented Step code
     this.step(delta, root);
   }
@@ -24,6 +30,11 @@ export class GameObject {
   // called once on every frame with deltatime passed - this will be implemented by children
   step(delta){
 
+  }
+
+  // called by individual game objects to setup listeners once added to main scene
+  ready() {
+    
   }
 
   /* draw entry */
