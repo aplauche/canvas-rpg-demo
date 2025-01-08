@@ -4,11 +4,18 @@ class Resources {
   constructor(){
     // everything that will get downloaded
     this.toLoad = {
-      sky: "/sprites/sky.png",
-      ground: "/sprites/ground.png",
+
       rod: "/sprites/rod.png",
       shadow: "/sprites/shadow.png",
       hero: "/sprites/hero-sheet.png",
+      exit: "/sprites/exit.png",
+
+      sky: "/sprites/sky.png",
+      ground: "/sprites/ground.png",
+
+      cave: "/sprites/cave.png",
+
+      caveGround: "/sprites/cave-ground.png",
     }
 
     // bucket for all image assets
