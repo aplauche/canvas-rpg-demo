@@ -4,9 +4,11 @@ import { GameLoop } from './GameLoop';
 import { GameObject } from './GameObject';
 import { gridCells } from './helpers/grid';
 import { Input} from './Input';
+import { OutdoorLevel1 } from './levels/OutdoorLevel1';
 import { Exit } from './objects/Exit/Exit';
 import { Hero } from './objects/Hero/Hero';
 import { Inventory } from './objects/Inventory/Inventory';
+import { Main } from './objects/Main/Main';
 import { Rod } from './objects/Rod/Rod';
 import { resources } from './Resources';
 import { Sprite } from './Sprite';
@@ -19,41 +21,12 @@ export const canvasDimensions = new Vector2(320, 180)
 
 const ctx = canvas.getContext("2d");
 
-const mainScene = new GameObject({
+const mainScene = new Main({
   position: new Vector2(0,0)
 })
 
-const skySprite = new Sprite({
-  resource: resources.images.sky,
-  frameSize: canvasDimensions,
-})
+mainScene.setLevel(new OutdoorLevel1())
 
-
-const groundSprite = new Sprite({
-  resource: resources.images.ground,
-  frameSize: canvasDimensions,
-})
-mainScene.addChild(groundSprite)
-
-
-const exit = new Exit(gridCells(6), gridCells(3))
-mainScene.addChild(exit)
-
-const hero = new Hero(gridCells(6), gridCells(5))
-mainScene.addChild(hero)
-//mainScene.addChild(skySprite)
-
-
-
-const camera = new Camera()
-mainScene.addChild(camera)
-
-const rod = new Rod(gridCells(7), gridCells(6))
-mainScene.addChild(rod)
-
-const inventory = new Inventory()
-
-mainScene.input = new Input()
 
 events.on("HERO_EXITED", mainScene, () => {
   console.log("Change scene");
@@ -67,22 +40,25 @@ const draw = () => {
   ctx.clearRect(0,0,canvas.width, canvas.height) // clear the canvas
 
   // First just draw the sky statically
-  skySprite.drawImage(ctx,0,0)
+
+  mainScene.drawBackground(ctx)
 
   // save the current context state
   ctx.save()
 
-  // offset everything
-  ctx.translate(camera.position.x, camera.position.y)
+  if(mainScene.camera){
+    // offset everything
+    ctx.translate(mainScene.camera.position.x, mainScene.camera.position.y)
+  }
 
   // draw the scene with everything offset by camera position
-  mainScene.draw(ctx,0,0)
+  mainScene.draw(ctx)
 
   // restore the saved state
   ctx.restore()
 
   // After translations, draw the UI elements
-  inventory.draw(ctx,0,0)
+  mainScene.drawForeground(ctx)
 
 
 }
