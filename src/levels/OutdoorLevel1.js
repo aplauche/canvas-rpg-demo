@@ -1,3 +1,4 @@
+import { events } from "../Events";
 import { gridCells } from "../helpers/grid";
 import { canvasDimensions } from "../main";
 import { Exit } from "../objects/Exit/Exit";
@@ -6,6 +7,7 @@ import { Level } from "../objects/Level/Level";
 import { Rod } from "../objects/Rod/Rod";
 import { resources } from "../Resources";
 import { Sprite } from "../Sprite";
+import { CaveLevel1 } from "./CaveLevel1";
 
 
 export class OutdoorLevel1 extends Level {
@@ -43,6 +45,12 @@ export class OutdoorLevel1 extends Level {
     this.walls.add(`160,80`);
     
   } 
+
+  ready(){
+    events.on("HERO_EXITED", this, () => {
+      events.emit("CHANGE_LEVEL", new CaveLevel1())
+    })
+  }
 }
 
 

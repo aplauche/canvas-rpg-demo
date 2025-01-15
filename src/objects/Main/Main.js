@@ -1,4 +1,5 @@
 import { Camera } from "../../Camera"
+import { events } from "../../Events"
 import { GameObject } from "../../GameObject"
 import { Input } from "../../Input"
 import { Inventory } from "../Inventory/Inventory"
@@ -11,6 +12,12 @@ export class Main extends GameObject {
     this.input = new Input()
     this.camera = new Camera()
     this.inventory = new Inventory()
+  }
+
+  ready(){
+    events.on('CHANGE_LEVEL', this, newLevel => {
+      this.setLevel(newLevel)
+    })
   }
 
   setLevel(level){

@@ -4,6 +4,7 @@ import { GameLoop } from './GameLoop';
 import { GameObject } from './GameObject';
 import { gridCells } from './helpers/grid';
 import { Input} from './Input';
+import { CaveLevel1 } from './levels/CaveLevel1';
 import { OutdoorLevel1 } from './levels/OutdoorLevel1';
 import { Exit } from './objects/Exit/Exit';
 import { Hero } from './objects/Hero/Hero';
@@ -25,11 +26,7 @@ const mainScene = new Main({
   position: new Vector2(0,0)
 })
 
-mainScene.setLevel(new OutdoorLevel1())
-
-events.on("HERO_EXITED", mainScene, () => {
-  console.log("Change scene");
-})
+mainScene.setLevel(new CaveLevel1())
 
 const draw = () => {
   // for a basic static canvas we can just draw:
