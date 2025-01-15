@@ -9,6 +9,8 @@ export class GameObject {
     this.children = []
     this.parent = null
     this.isReady = false
+    this.isSolid = false
+    this.drawLayer = null
   }
 
   // First entry point of the loop

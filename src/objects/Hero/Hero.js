@@ -94,7 +94,15 @@ export class Hero extends GameObject {
     // update facing to last direction
     this.facingDirection = input.direction ?? this.facingDirection;
   
-    if(isSpaceFree(root.level.walls, nextX, nextY)){
+    // Check for obstructions
+    const noWalls = isSpaceFree(root.level?.walls, nextX, nextY)
+    // Check if any children of level have are solid and are blocking move with find
+    const noSolidObjects = !this.parent.children.find(child => {
+      return child.isSolid && child.position.x === nextX && child.position.y === nextY
+    }) // will return false if nothing found
+
+    // if clear go ahead and move
+    if(noWalls && noSolidObjects){
        this.destination.x = nextX
        this.destination.y = nextY
     }
