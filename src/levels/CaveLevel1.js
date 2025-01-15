@@ -6,10 +6,16 @@ import { Hero } from "../objects/Hero/Hero";
 import { Level } from "../objects/Level/Level";
 import { resources } from "../Resources";
 import { Sprite } from "../Sprite";
+import { Vector2 } from "../Vector2";
 import { OutdoorLevel1 } from "./OutdoorLevel1";
 
+
+// Default for hero start
+const DEFAULT_HERO_POSITION = new Vector2(gridCells(3), gridCells(4))
+
 export class CaveLevel1 extends Level {
-  constructor(){
+  // allow params to be passed into level when init'd
+  constructor(params = {}){
     super({})
 
     this.background = new Sprite({
@@ -26,7 +32,9 @@ export class CaveLevel1 extends Level {
     const exit = new Exit(gridCells(3), gridCells(4))
     this.addChild(exit)
 
-    const hero = new Hero(gridCells(5), gridCells(6))
+    // If a heroPosition is passed into params use that, otherwise use default
+    this.heroStart = params.heroPosition ?? DEFAULT_HERO_POSITION
+    const hero = new Hero(this.heroStart.x, this.heroStart.y)
     this.addChild(hero)
 
     this.walls = new Set()
@@ -35,7 +43,9 @@ export class CaveLevel1 extends Level {
   ready(){
     events.on("HERO_EXITED", this, () => {
       console.log("Change scene");
-      events.emit("CHANGE_LEVEL", new OutdoorLevel1())
+      events.emit("CHANGE_LEVEL", new OutdoorLevel1({
+        heroPosition: new Vector2(gridCells(6), gridCells(3))
+      }))
     })
   }
 }

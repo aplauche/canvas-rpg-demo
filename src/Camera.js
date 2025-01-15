@@ -9,23 +9,29 @@ export class Camera extends GameObject {
     super();
 
     events.on("HERO_POSITION_CHANGED", this, (heroPosition) => {
-
-      // we want to center the person on screen
-      const personHalfWidth = 8
-      const canvasWidth = canvasDimensions.x
-      const canvasHeight = canvasDimensions.y
-
-      const halfWidth = -personHalfWidth + canvasWidth / 2
-      const halfHeight = -personHalfWidth + canvasHeight / 2
-
-      this.position = new Vector2(
-        -heroPosition.x + halfWidth,
-        -heroPosition.y + halfHeight
-      )
-
-      console.log('camera position', this.position)
+      this.snapCameraToPosition(heroPosition)
     })
 
+    // camera listens for level changes to snap to the new start to avoid flash of wrong frame
+    events.on("CHANGE_LEVEL", this, newLevel => {
+      this.snapCameraToPosition(newLevel.heroStart)
+    })
+
+  }
+
+  snapCameraToPosition(pos){
+    // we want to center the person on screen
+    const personHalfWidth = 8
+    const canvasWidth = canvasDimensions.x
+    const canvasHeight = canvasDimensions.y
+
+    const halfWidth = -personHalfWidth + canvasWidth / 2
+    const halfHeight = -personHalfWidth + canvasHeight / 2
+
+    this.position = new Vector2(
+      -pos.x + halfWidth,
+      -pos.y + halfHeight
+    )
   }
 
 
