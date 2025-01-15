@@ -48,8 +48,22 @@ export class GameObject {
     // Do the actual rendering for Images
     this.drawImage(ctx, drawPosX, drawPosY);
 
-    // Pass on to children
-    this.children.forEach((child) => child.draw(ctx, drawPosX, drawPosY));
+    // Pass on to children in a sorted fashion to render everything
+    this.getOrderedDrawChildren().forEach((child) => child.draw(ctx, drawPosX, drawPosY));
+  }
+
+  // copy the child array and figure out order
+  getOrderedDrawChildren(){
+    return [...this.children].sort((a,b) => {
+
+      // short circuit to always put floor layers on bottom
+      if(b.drawLayer === "FLOOR"){
+        return 1
+      }
+
+      // check the reltive position y to get dynamic layering
+      return a.position.y > b.position.y ? 1 : -1
+    })
   }
 
   // this will be implemented by children
