@@ -27,7 +27,6 @@ const mainScene = new Main({
 
 mainScene.setLevel(new OutdoorLevel1())
 
-
 events.on("HERO_EXITED", mainScene, () => {
   console.log("Change scene");
 })
@@ -40,7 +39,6 @@ const draw = () => {
   ctx.clearRect(0,0,canvas.width, canvas.height) // clear the canvas
 
   // First just draw the sky statically
-
   mainScene.drawBackground(ctx)
 
   // save the current context state

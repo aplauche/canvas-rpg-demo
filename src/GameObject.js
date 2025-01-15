@@ -39,7 +39,7 @@ export class GameObject {
 
   /* draw entry */
   // This gets called in gameloop drawing the base and then rendering and drawing each child
-  draw(ctx, x, y) {
+  draw(ctx, x = 0, y = 0) {
     const drawPosX = x + this.position.x;
     const drawPosY = y + this.position.y;
 

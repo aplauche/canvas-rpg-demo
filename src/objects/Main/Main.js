@@ -15,6 +15,7 @@ export class Main extends GameObject {
 
   setLevel(level){
 
+    // if we are calling this to switch levels, destroy the current one
     if(this.level){
       this.level.destroy();
     }

@@ -94,10 +94,10 @@ export class Hero extends GameObject {
     // update facing to last direction
     this.facingDirection = input.direction ?? this.facingDirection;
   
-    if(isSpaceFree(walls, nextX, nextY)){
-      this.destination.x = nextX
-      this.destination.y = nextY
-    }
+    // if(isSpaceFree(walls, nextX, nextY)){
+       this.destination.x = nextX
+       this.destination.y = nextY
+    // }
   
   
   
