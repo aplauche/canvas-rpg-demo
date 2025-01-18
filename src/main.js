@@ -1,18 +1,6 @@
-import { Camera } from './Camera';
-import { events } from './Events';
 import { GameLoop } from './GameLoop';
-import { GameObject } from './GameObject';
-import { gridCells } from './helpers/grid';
-import { Input} from './Input';
 import { CaveLevel1 } from './levels/CaveLevel1';
-import { OutdoorLevel1 } from './levels/OutdoorLevel1';
-import { Exit } from './objects/Exit/Exit';
-import { Hero } from './objects/Hero/Hero';
-import { Inventory } from './objects/Inventory/Inventory';
 import { Main } from './objects/Main/Main';
-import { Rod } from './objects/Rod/Rod';
-import { resources } from './Resources';
-import { Sprite } from './Sprite';
 import './style.css'
 import { Vector2 } from './Vector2';
 

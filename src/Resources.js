@@ -17,6 +17,8 @@ class Resources {
 
       caveGround: "/sprites/cave-ground.png",
       knight: "/sprites/knight-sheet-1.png",
+
+      textBox: "/sprites/text-box.png"
     }
 
     // bucket for all image assets
