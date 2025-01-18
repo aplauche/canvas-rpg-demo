@@ -10,6 +10,8 @@ export class Inventory extends GameObject {
       position: new Vector2(0,2) //schooch it down a bit
     })
 
+    this.drawLayer = "HUD"
+
     this.items = []
 
     events.on("ITEM_PICKUP", this, (data) => {

@@ -35,7 +35,8 @@ const draw = () => {
   }
 
   // draw the scene with everything offset by camera position
-  mainScene.draw(ctx)
+  // mainScene.draw(ctx)
+  mainScene.drawObjects(ctx) // kicks off custom recursive loop that ignores hud
 
   // restore the saved state
   ctx.restore()

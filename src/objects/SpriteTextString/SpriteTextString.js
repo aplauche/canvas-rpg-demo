@@ -9,6 +9,9 @@ import {GameObject} from "../../GameObject.js";
      super({
        position: new Vector2(32, 108)
      });
+
+     this.drawLayer = "HUD"
+
      const content = str ?? "Default text";
  
      // Create an array of words (because it helps with line wrapping later)

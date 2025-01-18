@@ -16,6 +16,10 @@ export class Main extends GameObject {
     this.inventory = new Inventory()
     //this.textBox = new TextBox()
     this.textBox = new SpriteTextString("this is some demo text!!!! this is some demo text!!!! this is some demo text!!!!")
+  
+    this.addChild(this.inventory)
+    this.addChild(this.textBox)
+  
   }
 
   ready(){
@@ -39,8 +43,22 @@ export class Main extends GameObject {
     this.level?.background.drawImage(ctx, 0, 0)
   }
 
+  drawObjects(ctx){
+    this.children.forEach(child => {
+      if(child.drawLayer !== "HUD"){
+        child.draw(ctx, 0, 0);
+      }
+    })
+  }
+
   drawForeground(ctx){
-    this.inventory.draw(ctx, this.inventory.position.x, this.inventory.position.y)
-    this.textBox.draw(ctx, 0, 0)
+    // this.inventory.draw(ctx, this.inventory.position.x, this.inventory.position.y)
+    // this.textBox.draw(ctx, 0, 0)
+    // this allows HUD elements to be children and receive the step/gameloop but be rendered seperately
+    this.children.forEach(child => {
+      if(child.drawLayer === "HUD"){
+        child.draw(ctx, 0, 0);
+      }
+    })
   }
 }
