@@ -3,6 +3,7 @@ import { events } from "../../Events"
 import { GameObject } from "../../GameObject"
 import { Input } from "../../Input"
 import { Inventory } from "../Inventory/Inventory"
+import { SpriteTextString } from "../SpriteTextString/SpriteTextString"
 import { TextBox } from "../TextBox/TextBox"
 
 export class Main extends GameObject {
@@ -13,7 +14,8 @@ export class Main extends GameObject {
     this.input = new Input()
     this.camera = new Camera()
     this.inventory = new Inventory()
-    this.textBox = new TextBox()
+    //this.textBox = new TextBox()
+    this.textBox = new SpriteTextString("this is some demo text!!!! this is some demo text!!!! this is some demo text!!!!")
   }
 
   ready(){
