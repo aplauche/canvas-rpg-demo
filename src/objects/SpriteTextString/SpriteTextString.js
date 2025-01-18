@@ -50,8 +50,26 @@ import {GameObject} from "../../GameObject.js";
        resource: resources.images.textBox,
        frameSize: new Vector2(256, 64)
      })
+
+     // Typewriter functionality
+     this.showingIndex = 0;
+     this.textSpeed = 50;
+     this.timeUntilNextShow = this.textSpeed;
+
    }
- 
+
+    //  hook into the step method which gives us access to delta time
+    step(delta){
+      this.timeUntilNextShow -= delta;
+      if (this.timeUntilNextShow <= 0) {
+        // Increase amount of characters that are drawn
+        this.showingIndex += 1;
+  
+        // Reset time counter for next character
+        this.timeUntilNextShow = this.textSpeed;
+      }
+    }
+
    drawImage(ctx, drawPosX, drawPosY) {
      // Draw the backdrop
      this.backdrop.drawImage(ctx, drawPosX, drawPosY)
@@ -65,6 +83,8 @@ import {GameObject} from "../../GameObject.js";
      // Initial position of cursor
      let cursorX = drawPosX + PADDING_LEFT;
      let cursorY = drawPosY + PADDING_TOP;
+
+     let currentShowingIndex = 0;
  
      this.words.forEach(word => {
  
@@ -78,20 +98,31 @@ import {GameObject} from "../../GameObject.js";
  
        // Draw this whole segment of text
        word.chars.forEach(char => {
-         const {sprite, width} = char;
- 
-         const withCharOffset = cursorX - 5; // this gets rid of the first extra 5 pixels of white space within each character cell from the sprite sheet
-         sprite.draw(ctx, withCharOffset, cursorY)
- 
-         // Add width of the character we just printed to cursor pos
-         cursorX += width;
- 
-         // plus 1px between character
-         cursorX += 1;
+
+        // Stop here if we should not yet show the following characters - delta time still running since last reveal
+        if (currentShowingIndex > this.showingIndex) {
+          return;
+        }
+
+        const {sprite, width} = char;
+
+        const withCharOffset = cursorX - 5; // this gets rid of the first extra 5 pixels of white space within each character cell from the sprite sheet
+        sprite.draw(ctx, withCharOffset, cursorY)
+
+        // Add width of the character we just printed to cursor pos
+        cursorX += width;
+
+        // plus 1px between character
+        cursorX += 1;
+
+        // Uptick the characters we are currently showing
+        currentShowingIndex += 1;
        })
  
        // Move the cursor over 3px between each word
        cursorX += 3;
      })
    }
+
+
  }

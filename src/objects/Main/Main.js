@@ -13,16 +13,24 @@ export class Main extends GameObject {
     this.level = null
     this.input = new Input()
     this.camera = new Camera()
-    this.inventory = new Inventory()
-    //this.textBox = new TextBox()
-    this.textBox = new SpriteTextString("this is some demo text!!!! this is some demo text!!!! this is some demo text!!!!")
-  
-    this.addChild(this.inventory)
-    this.addChild(this.textBox)
+
   
   }
 
   ready(){
+
+    const inventory = new Inventory()
+    this.addChild(inventory)
+
+
+    //this.textBox = new TextBox()
+    setTimeout(() => {
+      const textBox = new SpriteTextString("this is some demo text!!!! this is some demo text!!!! this is some demo text!!!!")
+      this.addChild(textBox)
+    },600)
+
+
+
     events.on('CHANGE_LEVEL', this, newLevel => {
       this.setLevel(newLevel)
     })
